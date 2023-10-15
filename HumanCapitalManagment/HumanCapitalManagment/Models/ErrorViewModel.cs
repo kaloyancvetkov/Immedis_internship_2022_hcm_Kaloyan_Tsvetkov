@@ -1,5 +1,3 @@
-using System;
-
 namespace HumanCapitalManagment.Models
 {
     public class ErrorViewModel
