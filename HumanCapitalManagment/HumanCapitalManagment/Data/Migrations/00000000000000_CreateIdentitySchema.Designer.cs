@@ -9,7 +9,7 @@ using System;
 
 namespace HumanCapitalManagment.Data.Migrations
 {
-    [DbContext(typeof(HumanCapitalManagmentDbContext))]
+    [DbContext(typeof(HCMDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {

@@ -1,6 +1,7 @@
 namespace HumanCapitalManagment
 {
     using HumanCapitalManagment.Data;
+    using HumanCapitalManagment.Infrastructure;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -21,7 +22,7 @@ namespace HumanCapitalManagment
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDbContext<HumanCapitalManagmentDbContext>(options => options
+                .AddDbContext<HCMDbContext>(options => options
                     .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -34,12 +35,14 @@ namespace HumanCapitalManagment
                     options.Password.RequireLowercase = false;
                     options.Password.RequireUppercase = false;
                 })
-                .AddEntityFrameworkStores<HumanCapitalManagmentDbContext>();
+                .AddEntityFrameworkStores<HCMDbContext>();
             services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.PrepareDatabase();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

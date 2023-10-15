@@ -1,0 +1,31 @@
+﻿namespace HumanCapitalManagment.Data
+{
+    using HumanCapitalManagment.Data.Models;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+
+    public class HCMDbContext : IdentityDbContext
+    {
+        public HCMDbContext(DbContextOptions<HCMDbContext> options)
+            : base(options)
+        {
+
+        }
+
+        public DbSet<Employee> Employees { get; init; }
+
+        public DbSet<Department> Departments { get; init; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder
+                .Entity<Employee>()
+                .HasOne(e => e.Department)
+                .WithMany(d => d.Employees)
+                .HasForeignKey(e => e.DepartmentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            base.OnModelCreating(builder);
+        }
+    }
+}
