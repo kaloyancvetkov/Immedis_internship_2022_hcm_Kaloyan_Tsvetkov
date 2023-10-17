@@ -10,6 +10,8 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
+      "hotReloadProfile": "aspnetcore",
+      "hotReloadEnabled": true,
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
