@@ -9,5 +9,10 @@
             public const int NationalityMaxLength = 30;
             public const int NationalityMinLength = 4;
         }
+
+        public static class Salary
+        {
+            public const int NoteMaxLength = 1000;
+        }
     }
 }

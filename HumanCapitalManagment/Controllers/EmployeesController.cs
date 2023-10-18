@@ -50,7 +50,55 @@
             this.data.Employees.Add(employeeData);
             this.data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
+        }
+
+        public IActionResult All(string searchTerm, string department)
+        {
+            var employeesQuery = this.data.Employees.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(department))
+            {
+                employeesQuery = employeesQuery.Where(e => e.Department.Name == department);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                employeesQuery = employeesQuery.Where(e => 
+                    e.Name.ToLower().Contains(searchTerm.ToLower()) ||
+                    e.EmailAddress.ToLower().Contains(searchTerm.ToLower()) ||
+                    e.PhoneNumber.Contains(searchTerm) ||
+                    e.Nationality.ToLower().Contains(searchTerm.ToLower()) ||
+                    e.DateOfBirth.ToString().Contains(searchTerm) ||
+                    e.Gender.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            var employees = employeesQuery
+                .Select(e => new EmployeeListingViewModel
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    EmailAddress = e.EmailAddress,
+                    PhoneNumber = e.PhoneNumber,
+                    Nationality = e.Nationality,
+                    DateOfBirth = e.DateOfBirth.ToShortDateString(),
+                    Gender = e.Gender,
+                    Department = e.Department.Name
+                })
+                .ToList();
+
+            var departments = this
+                .GetDepartments()
+                .Select(d => d.Name)
+                .OrderBy(d => d)
+                .ToList();
+
+            return View(new AllEmployeesQueryModel
+            {
+                Departments = departments,
+                Employees = employees,
+                SearchTerm = searchTerm
+            });
         }
 
         private IEnumerable<EmployeeDepartmentViewModel> GetDepartments()

@@ -16,6 +16,8 @@
 
         public DbSet<Department> Departments { get; init; }
 
+        public DbSet<Salary> Salaries { get; init; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
@@ -23,6 +25,13 @@
                 .HasOne(e => e.Department)
                 .WithMany(d => d.Employees)
                 .HasForeignKey(e => e.DepartmentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Employee>()
+                .HasOne(e => e.Salary)
+                .WithOne(s => s.Employee)
+                .HasForeignKey<Salary>(s => s.EmployeeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);

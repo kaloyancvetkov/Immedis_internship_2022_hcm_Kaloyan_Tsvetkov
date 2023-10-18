@@ -28,7 +28,7 @@
         [Required(ErrorMessage = "You must provide a date of birth")]
         [DataType(DataType.Date, ErrorMessage = "Invalid date")]
         [Display(Name = "Date of birth")]
-        public DateTime? DateOfBirth { get; init; }
+        public DateTime DateOfBirth { get; init; }
 
         [Required(ErrorMessage = "You must check one of the two options")]
         public string Gender { get; init; }
