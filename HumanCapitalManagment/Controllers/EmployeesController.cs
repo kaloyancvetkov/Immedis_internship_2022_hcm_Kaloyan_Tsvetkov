@@ -53,27 +53,38 @@
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All(string searchTerm, string department)
+        public IActionResult All([FromQuery]AllEmployeesQueryModel query)
         {
             var employeesQuery = this.data.Employees.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(department))
+            if (!string.IsNullOrWhiteSpace(query.Department))
             {
-                employeesQuery = employeesQuery.Where(e => e.Department.Name == department);
+                employeesQuery = employeesQuery.Where(e => e.Department.Name == query.Department);
             }
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
                 employeesQuery = employeesQuery.Where(e => 
-                    e.Name.ToLower().Contains(searchTerm.ToLower()) ||
-                    e.EmailAddress.ToLower().Contains(searchTerm.ToLower()) ||
-                    e.PhoneNumber.Contains(searchTerm) ||
-                    e.Nationality.ToLower().Contains(searchTerm.ToLower()) ||
-                    e.DateOfBirth.ToString().Contains(searchTerm) ||
-                    e.Gender.ToLower().Contains(searchTerm.ToLower()));
+                    e.Name.ToLower().Contains(query.SearchTerm.ToLower()) ||
+                    e.EmailAddress.ToLower().Contains(query.SearchTerm.ToLower()) ||
+                    e.PhoneNumber.Contains(query.SearchTerm) ||
+                    e.Nationality.ToLower().Contains(query.SearchTerm.ToLower()) ||
+                    e.DateOfBirth.ToString().Contains(query.SearchTerm) ||
+                    e.Gender.ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
+            employeesQuery = query.Sorting switch
+            {
+                EmployeesSorting.Name => employeesQuery.OrderBy(e => e.Name),
+                EmployeesSorting.Department => employeesQuery.OrderBy(e => e.Department.Name),
+                EmployeesSorting.Nationality => employeesQuery.OrderBy(e => e.Nationality),
+                EmployeesSorting.DateOfBirth => employeesQuery.OrderBy(e => e.DateOfBirth),
+                EmployeesSorting.DateAdded or _ => employeesQuery.OrderBy(e => e.Id)
+            };
+
             var employees = employeesQuery
+                .Skip((query.CurrentPage - 1) * AllEmployeesQueryModel.EmployeesPerPage)
+                .Take(AllEmployeesQueryModel.EmployeesPerPage)
                 .Select(e => new EmployeeListingViewModel
                 {
                     Id = e.Id,
@@ -87,18 +98,19 @@
                 })
                 .ToList();
 
+            var totalEmployees = employeesQuery.Count();
+
             var departments = this
                 .GetDepartments()
                 .Select(d => d.Name)
                 .OrderBy(d => d)
                 .ToList();
 
-            return View(new AllEmployeesQueryModel
-            {
-                Departments = departments,
-                Employees = employees,
-                SearchTerm = searchTerm
-            });
+            query.Departments = departments;
+            query.Employees = employees;
+            query.TotalEmployees = totalEmployees;
+
+            return View(query);
         }
 
         private IEnumerable<EmployeeDepartmentViewModel> GetDepartments()

@@ -66,17 +66,17 @@ body {
   white-space: nowrap;
   line-height: 60px; 
   font-family: Arial;
+  font-size: 15px;
 }
 
 #row-cards {
     gap: 50px;
     height: auto;
     width: auto;
+    grid: fit-content();
+    margin-bottom: 35px;
 }
 
-#jumbortron {
-    padding: unset;
-}
 
 .container {
     column-gap: 50px;
