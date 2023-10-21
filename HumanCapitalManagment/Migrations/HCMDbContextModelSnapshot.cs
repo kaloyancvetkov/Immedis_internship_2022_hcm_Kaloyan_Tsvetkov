@@ -28,7 +28,8 @@ namespace HumanCapitalManagment.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -42,8 +43,7 @@ namespace HumanCapitalManagment.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("DateOfBirth")
-                        .IsRequired()
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DepartmentId")
@@ -57,10 +57,13 @@ namespace HumanCapitalManagment.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("HRSpecialistId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Nationality")
                         .IsRequired()
@@ -69,42 +72,45 @@ namespace HumanCapitalManagment.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("HRSpecialistId");
+
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("HumanCapitalManagment.Data.Models.Salary", b =>
+            modelBuilder.Entity("HumanCapitalManagment.Data.Models.HRSpecialist", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("DateAdded")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("datetime2");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("SalaryNote")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId")
+                    b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Salaries");
+                    b.ToTable("HRSpecialists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -315,18 +321,24 @@ namespace HumanCapitalManagment.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("HumanCapitalManagment.Data.Models.Salary", b =>
-                {
-                    b.HasOne("HumanCapitalManagment.Data.Models.Employee", "Employee")
-                        .WithOne("Salary")
-                        .HasForeignKey("HumanCapitalManagment.Data.Models.Salary", "EmployeeId")
+                    b.HasOne("HumanCapitalManagment.Data.Models.HRSpecialist", "HRSpecialist")
+                        .WithMany("Employees")
+                        .HasForeignKey("HRSpecialistId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Employee");
+                    b.Navigation("Department");
+
+                    b.Navigation("HRSpecialist");
+                });
+
+            modelBuilder.Entity("HumanCapitalManagment.Data.Models.HRSpecialist", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("HumanCapitalManagment.Data.Models.HRSpecialist", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -385,9 +397,9 @@ namespace HumanCapitalManagment.Migrations
                     b.Navigation("Employees");
                 });
 
-            modelBuilder.Entity("HumanCapitalManagment.Data.Models.Employee", b =>
+            modelBuilder.Entity("HumanCapitalManagment.Data.Models.HRSpecialist", b =>
                 {
-                    b.Navigation("Salary");
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

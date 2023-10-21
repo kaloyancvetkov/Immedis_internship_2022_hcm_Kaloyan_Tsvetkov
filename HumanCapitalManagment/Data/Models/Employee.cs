@@ -18,7 +18,7 @@
         public string EmailAddress { get; set; }
 
         [Required]
-        [DataType(DataType.PhoneNumber)]
+        [MaxLength(PhoneNumberMaxLength)]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "The nationality is required")]
@@ -36,7 +36,7 @@
         public int DepartmentId { get; set; }
         public Department Department { get; init; }
 
-        public Salary Salary { get; init; }
-
+        public int HRSpecialistId { get; init; }
+        public HRSpecialist HRSpecialist { get; init; }
     }
 }

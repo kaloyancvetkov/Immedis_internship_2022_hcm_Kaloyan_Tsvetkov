@@ -49,7 +49,13 @@
 </form>
 
 <div class="row justify-content-center">
-    <table class="table">
+
+    @if (!Model.Employees.Any()) {
+        <h2 class="text-center">No Employees found by the given criteria!</h2>
+    }
+    else
+    {
+        <table class="table">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
@@ -82,14 +88,16 @@
         <a class="btn btn-primary float-left @(Model.CurrentPage == 1 ? "disabled" : string.Empty)" asp-controller="Employees" asp-action="All" asp-route-currentPage="@previousPage"
            asp-route-department="@Model.Department"
            asp-route-searchTerm="@Model.SearchTerm"
-           asp-route-sorting="@((int)Model.Sorting)"><<</a>
+           asp-route-sorting="@((int)Model.Sorting)">Previous</a>
     </div>
     <div class="col-md-6">
         <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)" asp-controller="Employees" asp-action="All" asp-route-currentPage="@(Model.CurrentPage + 1)"
            asp-route-department="@Model.Department"
            asp-route-searchTerm="@Model.SearchTerm"
-           asp-route-sorting="@((int)Model.Sorting)">>></a>
+           asp-route-sorting="@((int)Model.Sorting)">Next</a>
     </div>
+    }
+    
 </div>
 
 
