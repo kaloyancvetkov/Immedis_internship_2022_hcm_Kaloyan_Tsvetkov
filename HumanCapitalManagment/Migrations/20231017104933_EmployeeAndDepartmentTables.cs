@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace HumanCapitalManagment.Migrations
+﻿namespace HumanCapitalManagment.Migrations
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
     public partial class EmployeeAndDepartmentTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

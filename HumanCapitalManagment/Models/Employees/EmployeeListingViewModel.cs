@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace HumanCapitalManagment.Models.Employees
+﻿namespace HumanCapitalManagment.Models.Employees
 {
     public class EmployeeListingViewModel
     {

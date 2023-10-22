@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using static Data.DataConstants.HRSpecialist;
+    using static DataConstants.HRSpecialist;
     public class HRSpecialist
     {
         public int Id { get; init; }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace HumanCapitalManagment.Models.Home
+﻿namespace HumanCapitalManagment.Models.Home
 {
     public class IndexViewModel
     {

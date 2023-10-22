@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace HumanCapitalManagment.Migrations
+﻿namespace HumanCapitalManagment.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class HRSpecialistsTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

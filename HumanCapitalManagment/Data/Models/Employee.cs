@@ -14,11 +14,10 @@
 
         [Required(ErrorMessage = "The email address is required")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
-        [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
 
         [Required]
-        [MaxLength(PhoneNumberMaxLength)]
+        [StringLength(PhoneNumberMaxLength, MinimumLength = PhoneNumberMinLength)]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "The nationality is required")]
@@ -27,7 +26,6 @@
 
         [Required(ErrorMessage = "You must provide a date of birth")]
         [DataType(DataType.Date, ErrorMessage = "Invalid date")]
-        [Display(Name = "Date of birth")]
         public DateTime DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "You must check one of the two options")]

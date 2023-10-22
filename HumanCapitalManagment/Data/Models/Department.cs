@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using static Data.DataConstants.Department;
+    using static DataConstants.Department;
 
     public class Department
     {

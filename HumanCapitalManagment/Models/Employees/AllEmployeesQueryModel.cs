@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace HumanCapitalManagment.Models.Employees
+﻿namespace HumanCapitalManagment.Models.Employees
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
     public class AllEmployeesQueryModel
     {
         public const int EmployeesPerPage = 2;

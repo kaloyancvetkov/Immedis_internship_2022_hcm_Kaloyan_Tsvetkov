@@ -11,10 +11,8 @@
     {
         private readonly HCMDbContext data;
 
-        public HomeController(HCMDbContext data)
-        {
-            this.data = data;
-        }
+        public HomeController(HCMDbContext data) 
+            => this.data = data;
 
         public IActionResult Index()
         {

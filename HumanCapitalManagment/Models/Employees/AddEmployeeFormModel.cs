@@ -18,7 +18,7 @@
 
         [Required(ErrorMessage = "You must provide a phone number")]
         [Display(Name = "Phone Number")]
-        [DataType(DataType.PhoneNumber)]
+        [StringLength(PhoneNumberMaxLength, MinimumLength = PhoneNumberMinLength)]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "The nationality is required")]
