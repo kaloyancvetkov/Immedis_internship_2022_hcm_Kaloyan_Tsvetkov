@@ -1,6 +1,6 @@
-﻿namespace HumanCapitalManagment.Models.Employees
+﻿namespace HumanCapitalManagment.Services.Employees
 {
-    public class EmployeeListingViewModel
+    public class EmployeeServiceModel
     {
         public int Id { get; set; }
 

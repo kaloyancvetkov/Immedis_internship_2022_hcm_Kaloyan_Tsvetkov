@@ -3,6 +3,7 @@
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Models;
     using HumanCapitalManagment.Models.Home;
+    using HumanCapitalManagment.Services.Statistics;
     using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
     using System.Linq;
@@ -10,19 +11,25 @@
     public class HomeController : Controller
     {
         private readonly HCMDbContext data;
+        private readonly IStatisticsService statistics;
 
-        public HomeController(HCMDbContext data) 
-            => this.data = data;
+        public HomeController(IStatisticsService statistics, HCMDbContext data) 
+        {
+            this.statistics = statistics;
+            this.data = data;
+        }
 
         public IActionResult Index()
         {
             var totalEmployees = this.data.Employees.Count();
+            var totalUsers = this.data.Users.Count();
+
+            var totalStatistics = this.statistics.Total();
 
             return View(new IndexViewModel
             {
-                TotalEmployees = totalEmployees,
-                TotalUsers = 0,
-                TotalCandidates = 0
+                TotalEmployees = totalStatistics.TotalEmployees,
+                TotalUsers = totalStatistics.TotalUsers,
             });
         }
 

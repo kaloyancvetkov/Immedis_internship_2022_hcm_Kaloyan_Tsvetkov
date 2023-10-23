@@ -2,6 +2,8 @@ namespace HumanCapitalManagment
 {
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Infrastructure;
+    using HumanCapitalManagment.Services.Employees;
+    using HumanCapitalManagment.Services.Statistics;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -37,6 +39,9 @@ namespace HumanCapitalManagment
                 })
                 .AddEntityFrameworkStores<HCMDbContext>();
             services.AddControllersWithViews();
+
+            services.AddTransient<IStatisticsService, StatisticsService>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

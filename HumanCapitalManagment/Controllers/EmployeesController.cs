@@ -3,7 +3,9 @@
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Data.Models;
     using HumanCapitalManagment.Infrastructure;
+    using HumanCapitalManagment.Models;
     using HumanCapitalManagment.Models.Employees;
+    using HumanCapitalManagment.Services.Employees;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
@@ -12,9 +14,13 @@
     public class EmployeesController : Controller
     {
         private readonly HCMDbContext data;
+        private readonly IEmployeeService employees;
 
-        public EmployeesController(HCMDbContext data)
-            => this.data = data;
+        public EmployeesController(HCMDbContext data, IEmployeeService employees)
+        {
+            this.data = data;
+            this.employees = employees;
+        }
 
         [Authorize]
         public IActionResult Add()
@@ -77,60 +83,18 @@
 
         public IActionResult All([FromQuery] AllEmployeesQueryModel query)
         {
-            var employeesQuery = this.data.Employees.AsQueryable();
+            var queryResult = this.employees.All(
+                query.Department,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                AllEmployeesQueryModel.EmployeesPerPage);
 
-            if (!string.IsNullOrWhiteSpace(query.Department))
-            {
-                employeesQuery = employeesQuery.Where(e => e.Department.Name == query.Department);
-            }
-
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                employeesQuery = employeesQuery.Where(e =>
-                    e.Name.ToLower().Contains(query.SearchTerm.ToLower()) ||
-                    e.EmailAddress.ToLower().Contains(query.SearchTerm.ToLower()) ||
-                    e.PhoneNumber.Contains(query.SearchTerm) ||
-                    e.Nationality.ToLower().Contains(query.SearchTerm.ToLower()) ||
-                    e.DateOfBirth.ToString().Contains(query.SearchTerm) ||
-                    e.Gender.ToLower().Contains(query.SearchTerm.ToLower()));
-            }
-
-            employeesQuery = query.Sorting switch
-            {
-                EmployeesSorting.Name => employeesQuery.OrderBy(e => e.Name),
-                EmployeesSorting.Department => employeesQuery.OrderBy(e => e.Department.Name),
-                EmployeesSorting.Nationality => employeesQuery.OrderBy(e => e.Nationality),
-                EmployeesSorting.DateOfBirth => employeesQuery.OrderBy(e => e.DateOfBirth),
-                EmployeesSorting.DateAdded or _ => employeesQuery.OrderBy(e => e.Id)
-            };
-
-            var employees = employeesQuery
-                .Skip((query.CurrentPage - 1) * AllEmployeesQueryModel.EmployeesPerPage)
-                .Take(AllEmployeesQueryModel.EmployeesPerPage)
-                .Select(e => new EmployeeListingViewModel
-                {
-                    Id = e.Id,
-                    Name = e.Name,
-                    EmailAddress = e.EmailAddress,
-                    PhoneNumber = e.PhoneNumber,
-                    Nationality = e.Nationality,
-                    DateOfBirth = e.DateOfBirth.ToShortDateString(),
-                    Gender = e.Gender,
-                    Department = e.Department.Name
-                })
-                .ToList();
-
-            var totalEmployees = employeesQuery.Count();
-
-            var departments = this
-                .GetDepartments()
-                .Select(d => d.Name)
-                .OrderBy(d => d)
-                .ToList();
+            var departments = this.employees.AllDepartments();
 
             query.Departments = departments;
-            query.Employees = employees;
-            query.TotalEmployees = totalEmployees;
+            query.Employees = queryResult.Employees;
+            query.TotalEmployees = queryResult.TotalEmployees;
 
             return View(query);
         }

@@ -2,10 +2,12 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using HumanCapitalManagment.Models;
+    using HumanCapitalManagment.Services.Employees;
 
     public class AllEmployeesQueryModel
     {
-        public const int EmployeesPerPage = 2;
+        public const int EmployeesPerPage = 10;
 
         public string Department { get; init; }
 
@@ -20,6 +22,6 @@
 
         public int TotalEmployees { get; set; }
 
-        public IEnumerable<EmployeeListingViewModel> Employees { get; set; }
+        public IEnumerable<EmployeeServiceModel> Employees { get; set; }
     }
 }

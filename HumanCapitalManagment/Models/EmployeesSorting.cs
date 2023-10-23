@@ -1,4 +1,4 @@
-﻿namespace HumanCapitalManagment.Models.Employees
+﻿namespace HumanCapitalManagment.Models
 {
     public enum EmployeesSorting
     {

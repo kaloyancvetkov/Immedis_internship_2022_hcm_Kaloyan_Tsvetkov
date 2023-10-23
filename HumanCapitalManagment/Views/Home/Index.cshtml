@@ -32,18 +32,33 @@
             </div>
         </div>
     </div>
-    <div class="jumbotron mt-4" style="padding-top: 20px; padding-bottom: 20px; padding-left: 10px; padding-right: 10px;">
+
+    <div class="row text-center">
+        <div class="col-12 text-center mb-3">
+            <button class="btn btn-primary" id="statistics-button">Show Statistics</button>
+        </div>
+    </div>
+
+    <div class="jumbotron d-none mt-4" id="statistics" style="padding-top: 20px; padding-bottom: 20px; padding-left: 10px; padding-right: 10px;">
         <div class="row">
-            <h2 class="col-md-4 text-center">
-                @Model.TotalEmployees Employees
-            </h2>
-            <h2 class="col-md-4 text-center">
-                @Model.TotalUsers Users
-            </h2>
-            <h2 class="col-md-4 text-center">
-                @Model.TotalCandidates Candidates
-            </h2>
+            <h2 class="col-md-4 text-center" id="total-employees"></h2>
+            <h2 class="col-md-4 text-center" id="total-users"></h2>
+            <h2 class="col-md-4 text-center" id="total-candidates"></h2>
         </div>
     </div>
 </div>
 
+@section Scripts {
+    <script>
+        $('#statistics-button').on('click', ev => {
+            $.get('/api/statistics', (data) => {
+                $('#total-employees').text(data.totalEmployees + " Employees");
+                $('#total-users').text(data.totalUsers + " Users");
+                $('#total-candidates').text(data.totalCandidates + " Candidates");
+
+                $('#statistics').removeClass('d-none');
+                $('#statistics-button').hide();
+            });
+        });
+    </script>
+}
