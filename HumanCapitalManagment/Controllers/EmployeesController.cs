@@ -3,7 +3,6 @@
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Data.Models;
     using HumanCapitalManagment.Infrastructure;
-    using HumanCapitalManagment.Models;
     using HumanCapitalManagment.Models.Employees;
     using HumanCapitalManagment.Services.Employees;
     using Microsoft.AspNetCore.Authorization;

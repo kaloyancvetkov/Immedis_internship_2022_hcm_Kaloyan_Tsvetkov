@@ -1,7 +1,7 @@
-﻿@model AllEmployeesQueryModel
+﻿@model AllCandidatesQueryModel
 
 @{
-    ViewBag.Title = "Employees";
+    ViewBag.Title = "Candidates";
 }
 
 @{
@@ -11,7 +11,7 @@
         previousPage = 1;
     }
 
-    var maxPage = Math.Ceiling((double)Model.TotalEmployees / AllEmployeesQueryModel.EmployeesPerPage);
+    var maxPage = Math.Ceiling((double)Model.TotalCandidates / AllCandidatesQueryModel.CandidatesPerPage);
 }
 
 
@@ -50,52 +50,55 @@
 
 <div class="row justify-content-center">
 
-    @if (!Model.Employees.Any()) {
+    @if (!Model.Candidates.Any())
+    {
         <h2 class="text-center">No Employees found by the given criteria!</h2>
     }
     else
     {
-        <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Full Name</th>
-                <th scope="col">Email Address</th>
-                <th scope="col">Phone Number</th>
-                <th scope="col">Nationality</th>
-                <th scope="col">Date of birth</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Department</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var employee in Model.Employees)
-            {
+        <table class="table text-center">
+            <thead class="thead-dark">
                 <tr>
-                    <th scope="row">@employee.Id</th>
-                    <td>@employee.Name</td>
-                    <td>@employee.EmailAddress</td>
-                    <td>@employee.PhoneNumber</td>
-                    <td>@employee.Nationality</td>
-                    <td>@employee.DateOfBirth</td>
-                    <td>@employee.Gender</td>
-                    <td>@employee.Department</td>
+                    <th scope="col">#</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Email Address</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Nationality</th>
+                    <th scope="col">Date of birth</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Skill</th>
+                    <th scope="col">Hire</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <div class="col-md-6">
-        <a class="btn btn-primary float-left @(Model.CurrentPage == 1 ? "disabled" : string.Empty)" asp-controller="Employees" asp-action="All" asp-route-currentPage="@previousPage"
+            </thead>
+            <tbody>
+                @foreach (var employee in Model.Candidates)
+                {
+                    <tr>
+                        <th scope="row">@employee.Id</th>
+                        <td>@employee.Name</td>
+                        <td>@employee.EmailAddress</td>
+                        <td>@employee.PhoneNumber</td>
+                        <td>@employee.Nationality</td>
+                        <td>@employee.DateOfBirth</td>
+                        <td>@employee.Gender</td>
+                        <td>@employee.Department</td>
+                        <td><a class="btn btn-primary text-white">Hire</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="col-md-6">
+            <a class="btn btn-primary float-left @(Model.CurrentPage == 1 ? "disabled" : string.Empty)" asp-controller="Candidates" asp-action="All" asp-route-currentPage="@previousPage"
            asp-route-department="@Model.Department"
            asp-route-searchTerm="@Model.SearchTerm"
            asp-route-sorting="@((int)Model.Sorting)">Previous</a>
-    </div>
-    <div class="col-md-6">
-        <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)" asp-controller="Employees" asp-action="All" asp-route-currentPage="@(Model.CurrentPage + 1)"
+        </div>
+        <div class="col-md-6">
+            <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)" asp-controller="Candidates" asp-action="All" asp-route-currentPage="@(Model.CurrentPage + 1)"
            asp-route-department="@Model.Department"
            asp-route-searchTerm="@Model.SearchTerm"
            asp-route-sorting="@((int)Model.Sorting)">Next</a>
-    </div>
+        </div>
     }
-    
+
 </div>

@@ -19,6 +19,8 @@
 
         public DbSet<HRSpecialist> HRSpecialists { get; init; }
 
+        public DbSet<Candidate> Candidates { get; init; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
@@ -40,6 +42,13 @@
                 .HasOne<IdentityUser>()
                 .WithOne()
                 .HasForeignKey<HRSpecialist>(h => h.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Candidate>()
+                .HasOne(c => c.Department)
+                .WithMany(d => d.Candidates)
+                .HasForeignKey(c => c.DepartmentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);

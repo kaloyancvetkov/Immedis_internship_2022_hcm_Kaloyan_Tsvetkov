@@ -2,6 +2,7 @@ namespace HumanCapitalManagment
 {
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Infrastructure;
+    using HumanCapitalManagment.Services.Candidates;
     using HumanCapitalManagment.Services.Employees;
     using HumanCapitalManagment.Services.Statistics;
     using Microsoft.AspNetCore.Builder;
@@ -42,6 +43,7 @@ namespace HumanCapitalManagment
 
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<ICandidateService, CandidateService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

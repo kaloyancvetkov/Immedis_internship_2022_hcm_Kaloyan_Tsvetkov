@@ -13,5 +13,7 @@
         public string Name { get; set; }
 
         public IEnumerable<Employee> Employees { get; init; } = new List<Employee>();
+
+        public IEnumerable<Candidate> Candidates { get; init; } = new List<Candidate>();
     }
 }
