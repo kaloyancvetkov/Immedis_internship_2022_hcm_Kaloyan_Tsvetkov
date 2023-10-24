@@ -17,5 +17,9 @@
         public string Gender { get; set; }
 
         public string Department { get; set; }
+
+        public decimal SalaryAmount { get; set; }
+
+        public string SalaryStatus { get; set; }
     }
 }

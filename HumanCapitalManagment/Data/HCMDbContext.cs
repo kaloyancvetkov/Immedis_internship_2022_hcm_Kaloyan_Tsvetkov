@@ -51,6 +51,12 @@
                 .HasForeignKey(c => c.DepartmentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder
+                .Entity<Employee>()
+                .Property(e => e.SalaryAmount)
+                .HasColumnType("decimal(10,2)")
+                .IsRequired(true);
+
             base.OnModelCreating(builder);
         }
     }

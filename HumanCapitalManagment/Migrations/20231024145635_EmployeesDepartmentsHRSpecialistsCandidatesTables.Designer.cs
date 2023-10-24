@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanCapitalManagment.Migrations
 {
     [DbContext(typeof(HCMDbContext))]
-    [Migration("20231021230221_HRSpecialistsTable")]
-    partial class HRSpecialistsTable
+    [Migration("20231024145635_EmployeesDepartmentsHRSpecialistsCandidatesTables")]
+    partial class EmployeesDepartmentsHRSpecialistsCandidatesTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,49 @@ namespace HumanCapitalManagment.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("HumanCapitalManagment.Data.Models.Candidate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Nationality")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Candidates");
+                });
 
             modelBuilder.Entity("HumanCapitalManagment.Data.Models.Department", b =>
                 {
@@ -76,6 +119,13 @@ namespace HumanCapitalManagment.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<decimal>("SalaryAmount")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("SalaryStatus")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -315,6 +365,17 @@ namespace HumanCapitalManagment.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("HumanCapitalManagment.Data.Models.Candidate", b =>
+                {
+                    b.HasOne("HumanCapitalManagment.Data.Models.Department", "Department")
+                        .WithMany("Candidates")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
             modelBuilder.Entity("HumanCapitalManagment.Data.Models.Employee", b =>
                 {
                     b.HasOne("HumanCapitalManagment.Data.Models.Department", "Department")
@@ -396,6 +457,8 @@ namespace HumanCapitalManagment.Migrations
 
             modelBuilder.Entity("HumanCapitalManagment.Data.Models.Department", b =>
                 {
+                    b.Navigation("Candidates");
+
                     b.Navigation("Employees");
                 });
 

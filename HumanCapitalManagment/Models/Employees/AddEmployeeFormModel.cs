@@ -37,5 +37,13 @@
         public int DepartmentId { get; init; }
 
         public IEnumerable<EmployeeDepartmentViewModel> Departments { get; set; }
+
+        [Required]
+        [Display(Name = "Salary Amount")]
+        public decimal SalaryAmount { get; set; }
+
+        [Display(Name = "Salary Status")]
+        [MaxLength(SalaryStatusMaxLength)]
+        public string SalaryStatus { get; set; }
     }
 }

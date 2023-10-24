@@ -10,6 +10,7 @@
             public const int NationalityMinLength = 4;
             public const int PhoneNumberMaxLength = 20;
             public const int PhoneNumberMinLength = 6;
+            public const int SalaryStatusMaxLength = 50;
         }
 
         public static class HRSpecialist

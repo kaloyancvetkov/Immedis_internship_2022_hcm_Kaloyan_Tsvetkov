@@ -26,7 +26,7 @@
         {
             if (!this.UserIsHR())
             {
-                return RedirectToAction(nameof(HRSpecialistsController.Become), "HRsController");
+                return RedirectToAction(nameof(HRSpecialistsController.Become), "HRSpecialists");
             }
 
             return View(new AddEmployeeFormModel
@@ -47,7 +47,7 @@
 
             if (hrId == 0)
             {
-                return RedirectToAction(nameof(HRSpecialistsController.Become), "HRsController");
+                return RedirectToAction(nameof(HRSpecialistsController.Become), "HRSpecialists");
             }
 
             if (!this.data.Departments.Any(d => d.Id == employee.DepartmentId))
@@ -71,7 +71,9 @@
                 DateOfBirth = employee.DateOfBirth,
                 Gender = employee.Gender,
                 DepartmentId = employee.DepartmentId,
-                HRSpecialistId = hrId
+                HRSpecialistId = hrId,
+                SalaryAmount = employee.SalaryAmount,
+                SalaryStatus = employee.SalaryStatus
             };
 
             this.data.Employees.Add(employeeData);

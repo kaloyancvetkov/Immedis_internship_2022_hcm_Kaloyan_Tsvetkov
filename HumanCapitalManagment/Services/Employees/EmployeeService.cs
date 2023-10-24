@@ -34,6 +34,7 @@
                     e.PhoneNumber.Contains(searchTerm) ||
                     e.Nationality.ToLower().Contains(searchTerm.ToLower()) ||
                     e.DateOfBirth.ToString().Contains(searchTerm) ||
+                    e.SalaryStatus.ToLower().Contains(searchTerm.ToLower()) ||
                     e.Gender.ToLower().Contains(searchTerm.ToLower()));
             }
 
@@ -43,6 +44,7 @@
                 EmployeesSorting.Department => employeesQuery.OrderBy(e => e.Department.Name),
                 EmployeesSorting.Nationality => employeesQuery.OrderBy(e => e.Nationality),
                 EmployeesSorting.DateOfBirth => employeesQuery.OrderBy(e => e.DateOfBirth),
+                EmployeesSorting.SalaryAmount => employeesQuery.OrderByDescending(e => e.SalaryAmount),
                 EmployeesSorting.DateAdded or _ => employeesQuery.OrderBy(e => e.Id)
             };
 
@@ -60,7 +62,9 @@
                     Nationality = e.Nationality,
                     DateOfBirth = e.DateOfBirth.ToShortDateString(),
                     Gender = e.Gender,
-                    Department = e.Department.Name
+                    Department = e.Department.Name,
+                    SalaryAmount = e.SalaryAmount,
+                    SalaryStatus = e.SalaryStatus,
                 })
                 .ToList();
 

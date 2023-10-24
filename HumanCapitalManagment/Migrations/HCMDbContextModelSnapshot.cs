@@ -118,6 +118,13 @@ namespace HumanCapitalManagment.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<decimal>("SalaryAmount")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("SalaryStatus")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");

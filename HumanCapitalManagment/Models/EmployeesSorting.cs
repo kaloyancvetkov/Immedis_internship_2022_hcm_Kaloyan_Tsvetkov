@@ -6,6 +6,7 @@
         Name = 1,
         Department = 2,
         Nationality = 3,
-        DateOfBirth = 4
+        DateOfBirth = 4,
+        SalaryAmount = 5
     }
 }

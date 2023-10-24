@@ -36,5 +36,11 @@
 
         public int HRSpecialistId { get; init; }
         public HRSpecialist HRSpecialist { get; init; }
+
+        [Required]
+        public decimal SalaryAmount { get; set; }
+
+        [MaxLength(SalaryStatusMaxLength)]
+        public string SalaryStatus { get; set; }
     }
 }
