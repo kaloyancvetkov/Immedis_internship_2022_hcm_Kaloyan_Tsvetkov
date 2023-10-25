@@ -1,11 +1,8 @@
 ﻿namespace HumanCapitalManagment.Controllers.Api
 {
-    using HumanCapitalManagment.Data;
-    using HumanCapitalManagment.Models;
     using HumanCapitalManagment.Models.Api.Employees;
     using HumanCapitalManagment.Services.Employees;
     using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
 
     [ApiController]
     [Route("api/employees")]

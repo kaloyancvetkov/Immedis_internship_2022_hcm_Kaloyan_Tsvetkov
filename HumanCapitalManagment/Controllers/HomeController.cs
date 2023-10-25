@@ -30,6 +30,7 @@
             {
                 TotalEmployees = totalStatistics.TotalEmployees,
                 TotalUsers = totalStatistics.TotalUsers,
+                TotalCandidates = totalStatistics.TotalCandidates
             });
         }
 

@@ -1,13 +1,13 @@
 namespace HumanCapitalManagment
 {
     using HumanCapitalManagment.Data;
+    using HumanCapitalManagment.Data.Models;
     using HumanCapitalManagment.Infrastructure;
     using HumanCapitalManagment.Services.Candidates;
     using HumanCapitalManagment.Services.Employees;
     using HumanCapitalManagment.Services.Statistics;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -31,8 +31,9 @@ namespace HumanCapitalManagment
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<User>(options =>
                 {
+                    options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireDigit = false;
                     options.Password.RequireLowercase = false;

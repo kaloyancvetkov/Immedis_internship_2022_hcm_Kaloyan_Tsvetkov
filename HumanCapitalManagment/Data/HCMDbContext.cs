@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class HCMDbContext : IdentityDbContext
+    public class HCMDbContext : IdentityDbContext<User>
     {
         public HCMDbContext(DbContextOptions<HCMDbContext> options)
             : base(options)
@@ -39,7 +39,7 @@
 
             builder
                 .Entity<HRSpecialist>()
-                .HasOne<IdentityUser>()
+                .HasOne<User>()
                 .WithOne()
                 .HasForeignKey<HRSpecialist>(h => h.UserId)
                 .OnDelete(DeleteBehavior.Restrict);

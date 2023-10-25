@@ -8,23 +8,23 @@
     {
         public int Id { get; init; }
 
-        [Required(ErrorMessage = "The name is required")]
+        [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = "The name must be between {2} and {1} characters")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "The email address is required")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Required]
+        [EmailAddress]
         public string EmailAddress { get; set; }
 
         [Required]
         [StringLength(PhoneNumberMaxLength, MinimumLength = PhoneNumberMinLength)]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "The nationality is required")]
+        [Required]
         [StringLength(NationalityMaxLength, MinimumLength = NationalityMinLength, ErrorMessage = "The nationality must be between {2} and {1} characters")]
         public string Nationality { get; set; }
 
-        [Required(ErrorMessage = "You must provide a date of birth")]
+        [Required]
         [DataType(DataType.Date, ErrorMessage = "Invalid date")]
         public DateTime DateOfBirth { get; set; }
 
