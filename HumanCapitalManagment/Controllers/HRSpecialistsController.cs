@@ -22,7 +22,7 @@
         [Authorize]
         public IActionResult Become(BecomeHRSpecialistFormModel hrSpecialist)
         {
-            var userId = this.User.GetId();
+            var userId = this.User.Id();
 
             var userIsAlreadyHR = this.data
                 .HRSpecialists

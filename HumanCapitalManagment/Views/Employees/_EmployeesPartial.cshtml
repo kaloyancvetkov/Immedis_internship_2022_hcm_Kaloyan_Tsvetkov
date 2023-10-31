@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EmployeeServiceModel>
+
+@{
+    var str = "Hello";
+    
+}
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Email Address</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Nationality</th>
+            <th scope="col">Date of birth</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Department</th>
+            <th scope="col">Salary Amount</th>
+            <th scope="col">Salary Status</th>
+            @if (ViewBag.AllowEmployeeEdit == true)
+            {
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <th scope="row">@employee.Id</th>
+                <td>@employee.Name</td>
+                <td>@employee.EmailAddress</td>
+                <td>@employee.PhoneNumber</td>
+                <td>@employee.Nationality</td>
+                <td>@employee.DateOfBirth</td>
+                <td>@employee.Gender</td>
+                <td>@employee.DepartmentName</td>
+                <td>@employee.SalaryAmount</td>
+                <td>@(employee.SalaryStatus == null ? "N/A" : employee.SalaryStatus)</td>
+                @if (ViewBag.AllowEmployeeEdit == true)
+                {
+                    <td><a asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-warning">Edit</a></td>
+                    <td>
+                        <a asp-controller="Employees" asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

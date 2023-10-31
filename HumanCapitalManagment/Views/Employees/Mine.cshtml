@@ -1,0 +1,17 @@
+﻿@model IEnumerable<EmployeeServiceModel> 
+
+@{
+    ViewBag.Title = "My records";
+    ViewBag.AllowEmployeeEdit = true;
+}
+
+@if (!Model.Any()) {
+    <h2 class="text-center mt-5">You do not have any employee records yet!</h2>
+}
+else
+{
+    <div class="row justify-content-center">
+        <partial name="_EmployeesPartial" model="@Model" />
+    </div>
+}
+

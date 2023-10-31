@@ -1,5 +1,7 @@
 ﻿namespace HumanCapitalManagment.Services.Employees
 {
+    using System;
+
     public class EmployeeServiceModel
     {
         public int Id { get; set; }
@@ -12,11 +14,11 @@
 
         public string Nationality { get; set; }
 
-        public string DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         public string Gender { get; set; }
 
-        public string Department { get; set; }
+        public string DepartmentName { get; set; }
 
         public decimal SalaryAmount { get; set; }
 

@@ -1,12 +1,12 @@
-﻿namespace HumanCapitalManagment.Models.Candidates
+﻿namespace HumanCapitalManagment.Models.Employees
 {
-    using HumanCapitalManagment.Models.Employees;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using static HumanCapitalManagment.Data.DataConstants.Candidate;
+    using static Data.DataConstants.Employee;
+    using HumanCapitalManagment.Services.Employees;
 
-    public class AddCandidateFormModel
+    public class EmployeeFormModel
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = "The name must be between {2} and {1} characters")]
@@ -37,6 +37,14 @@
         [Display(Name = "Department")]
         public int DepartmentId { get; init; }
 
-        public IEnumerable<CandidateDepartmentViewModel> Departments { get; set; }
+        public IEnumerable<EmployeeDepartmentServiceModel> Departments { get; set; }
+
+        [Required]
+        [Display(Name = "Salary Amount")]
+        public decimal SalaryAmount { get; set; }
+
+        [Display(Name = "Salary Status")]
+        [MaxLength(SalaryStatusMaxLength)]
+        public string SalaryStatus { get; set; }
     }
 }

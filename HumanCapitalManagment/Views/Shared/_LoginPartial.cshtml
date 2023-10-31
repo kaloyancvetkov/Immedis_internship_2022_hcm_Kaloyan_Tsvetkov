@@ -1,13 +1,28 @@
 ﻿@using Microsoft.AspNetCore.Identity
+
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@inject IHRService HRSpecialists
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="HRSpecialists" asp-action="Become">Join HR Team</a>
-        </li>
+        var userId = User.Id();
+        var userIsHRSpecialist = HRSpecialists.IsHRSpecialist(userId);
+
+        @if (userIsHRSpecialist)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Employees" asp-action="Mine">My Records</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="HRSpecialists" asp-action="Become">Join HR Team</a>
+            </li>
+        }
+
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
         </li>

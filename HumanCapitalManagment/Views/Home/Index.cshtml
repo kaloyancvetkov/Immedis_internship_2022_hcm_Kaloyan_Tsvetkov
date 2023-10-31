@@ -43,7 +43,7 @@
         <div class="row">
             <h2 class="col-md-4 text-center" id="total-employees"></h2>
             <h2 class="col-md-4 text-center" id="total-users"></h2>
-            <h2 class="col-md-4 text-center" id="total-candidates"></h2>
+            <h2 class="col-md-4 text-center" id="total-hrSpecialists"></h2>
         </div>
     </div>
 </div>
@@ -54,7 +54,7 @@
             $.get('/api/statistics', (data) => {
                 $('#total-employees').text(data.totalEmployees + " Employees");
                 $('#total-users').text(data.totalUsers + " Users");
-                $('#total-candidates').text(data.totalCandidates + " Candidates");
+                $('#total-candidates').text(data.totalHRSpecialists + " Candidates");
 
                 $('#statistics').removeClass('d-none');
                 $('#statistics-button').hide();

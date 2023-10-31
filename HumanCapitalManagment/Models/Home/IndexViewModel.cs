@@ -6,7 +6,7 @@
 
         public int TotalUsers { get; init; }
 
-        public int TotalCandidates { get; init; }
+        public int TotalHRSpecialists { get; init; }
 
     }
 }

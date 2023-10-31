@@ -1,68 +1,94 @@
 ﻿namespace HumanCapitalManagment.Controllers
 {
     using HumanCapitalManagment.Data;
-    using HumanCapitalManagment.Data.Models;
     using HumanCapitalManagment.Infrastructure;
     using HumanCapitalManagment.Models.Employees;
     using HumanCapitalManagment.Services.Employees;
+    using HumanCapitalManagment.Services.HRs;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class EmployeesController : Controller
     {
-        private readonly HCMDbContext data;
+        private readonly IHRService hrSpecialists;
         private readonly IEmployeeService employees;
 
-        public EmployeesController(HCMDbContext data, IEmployeeService employees)
+        public EmployeesController(IEmployeeService employees, IHRService hrSpecialists)
         {
-            this.data = data;
             this.employees = employees;
+            this.hrSpecialists = hrSpecialists;
         }
 
         [Authorize]
         public IActionResult Add()
         {
-            if (!this.UserIsHR())
+            if (!this.hrSpecialists.IsHRSpecialist(this.User.Id()))
             {
                 return RedirectToAction(nameof(HRSpecialistsController.Become), "HRSpecialists");
             }
 
-            return View(new AddEmployeeFormModel
+            return View(new EmployeeFormModel
             {
-                Departments = this.GetDepartments()
+                Departments = this.employees.AllDepartments()
             });
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(AddEmployeeFormModel employee)
+        public IActionResult Add(EmployeeFormModel employee)
         {
-            var hrId = this.data
-                .HRSpecialists
-                .Where(h => h.UserId == this.User.GetId())
-                .Select(h => h.Id)
-                .FirstOrDefault();
+            var hrId = this.hrSpecialists.IdByUser(this.User.Id());
 
             if (hrId == 0)
             {
                 return RedirectToAction(nameof(HRSpecialistsController.Become), "HRSpecialists");
             }
 
-            if (!this.data.Departments.Any(d => d.Id == employee.DepartmentId))
+            if (!this.employees.DepartmentExists(employee.DepartmentId))
             {
                 this.ModelState.AddModelError(nameof(employee.DepartmentId), "Department doesn't exist.");
             }
 
             if (!ModelState.IsValid)
             {
-                employee.Departments = this.GetDepartments();
+                employee.Departments = this.employees.AllDepartments();
 
                 return View(employee);
             }
 
-            var employeeData = new Employee
+            this.employees.Create(
+                employee.Name,
+                employee.EmailAddress,
+                employee.PhoneNumber,
+                employee.Nationality,
+                employee.DateOfBirth,
+                employee.Gender,
+                employee.DepartmentId,
+                hrId,
+                employee.SalaryAmount,
+                employee.SalaryStatus);
+
+            return RedirectToAction(nameof(All));
+        }
+
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var userId = this.User.Id();
+
+            if (!this.hrSpecialists.IsHRSpecialist(this.User.Id()))
+            {
+                return RedirectToAction(nameof(HRSpecialistsController.Become), "HRSpecialists");
+            }
+
+            var employee = this.employees.Details(id);
+
+            if (employee.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(new EmployeeFormModel
             {
                 Name = employee.Name,
                 EmailAddress = employee.EmailAddress,
@@ -71,15 +97,53 @@
                 DateOfBirth = employee.DateOfBirth,
                 Gender = employee.Gender,
                 DepartmentId = employee.DepartmentId,
-                HRSpecialistId = hrId,
                 SalaryAmount = employee.SalaryAmount,
-                SalaryStatus = employee.SalaryStatus
-            };
+                SalaryStatus = employee.SalaryStatus,
+                Departments = this.employees.AllDepartments()
+            });
+        }
 
-            this.data.Employees.Add(employeeData);
-            this.data.SaveChanges();
+        [Authorize]
+        [HttpPost]
+        public IActionResult Edit (int id, EmployeeFormModel employee)
+        {
+            var hrId = this.hrSpecialists.IdByUser(this.User.Id());
 
-            return RedirectToAction(nameof(All));
+            if (hrId == 0)
+            {
+                return RedirectToAction(nameof(HRSpecialistsController.Become), "HRSpecialists");
+            }
+
+            if (!this.employees.DepartmentExists(employee.DepartmentId))
+            {
+                this.ModelState.AddModelError(nameof(employee.DepartmentId), "Department doesn't exist.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                employee.Departments = this.employees.AllDepartments();
+
+                return View(employee);
+            }
+
+            if (!this.employees.IsByHR(id, hrId))
+            {
+                return BadRequest();
+            }
+
+            this.employees.Edit(
+                id,
+                employee.Name,
+                employee.EmailAddress,
+                employee.PhoneNumber,
+                employee.Nationality,
+                employee.DateOfBirth,
+                employee.Gender,
+                employee.DepartmentId,
+                employee.SalaryAmount,
+                employee.SalaryStatus);
+
+            return RedirectToAction(nameof(Mine));
         }
 
         public IActionResult All([FromQuery] AllEmployeesQueryModel query)
@@ -91,7 +155,7 @@
                 query.CurrentPage,
                 AllEmployeesQueryModel.EmployeesPerPage);
 
-            var departments = this.employees.AllDepartments();
+            var departments = this.employees.AllDepartmentNames();
 
             query.Departments = departments;
             query.Employees = queryResult.Employees;
@@ -100,19 +164,12 @@
             return View(query);
         }
 
-        private bool UserIsHR()
-            => this.data
-                .HRSpecialists
-                .Any(h => h.UserId == this.User.GetId());
+        [Authorize]
+        public IActionResult Mine()
+        {
+            var myEmployees = this.employees.ByUser(this.User.Id());
 
-        private IEnumerable<EmployeeDepartmentViewModel> GetDepartments()
-            => this.data
-                .Departments
-                .Select(d => new EmployeeDepartmentViewModel
-                {
-                    Id = d.Id,
-                    Name = d.Name,
-                })
-                .ToList();
+            return View(myEmployees);
+        }
     }
 }
