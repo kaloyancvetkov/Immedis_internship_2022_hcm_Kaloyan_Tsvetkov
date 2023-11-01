@@ -8,6 +8,7 @@ namespace HumanCapitalManagment
     using HumanCapitalManagment.Services.Statistics;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +40,7 @@ namespace HumanCapitalManagment
                     options.Password.RequireLowercase = false;
                     options.Password.RequireUppercase = false;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<HCMDbContext>();
             services.AddControllersWithViews();
 

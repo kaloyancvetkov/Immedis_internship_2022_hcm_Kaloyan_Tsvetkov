@@ -1,11 +1,6 @@
 ﻿@model IEnumerable<EmployeeServiceModel>
 
-@{
-    var str = "Hello";
-    
-}
-
-<table class="table">
+<table class="table text-center">
     <thead class="thead-dark">
         <tr>
             <th scope="col">#</th>
@@ -18,7 +13,7 @@
             <th scope="col">Department</th>
             <th scope="col">Salary Amount</th>
             <th scope="col">Salary Status</th>
-            @if (ViewBag.AllowEmployeeEdit == true)
+            @if (ViewBag.AllowEmployeeEdit == true || User.IsAdmin())
             {
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
@@ -39,7 +34,7 @@
                 <td>@employee.DepartmentName</td>
                 <td>@employee.SalaryAmount</td>
                 <td>@(employee.SalaryStatus == null ? "N/A" : employee.SalaryStatus)</td>
-                @if (ViewBag.AllowEmployeeEdit == true)
+                @if (ViewBag.AllowEmployeeEdit == true || User.IsAdmin())
                 {
                     <td><a asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-warning">Edit</a></td>
                     <td>

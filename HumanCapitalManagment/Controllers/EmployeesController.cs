@@ -76,14 +76,14 @@
         {
             var userId = this.User.Id();
 
-            if (!this.hrSpecialists.IsHRSpecialist(this.User.Id()))
+            if (!this.hrSpecialists.IsHRSpecialist(this.User.Id()) && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(HRSpecialistsController.Become), "HRSpecialists");
             }
 
             var employee = this.employees.Details(id);
 
-            if (employee.UserId != userId)
+            if (employee.UserId != userId && !User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -109,7 +109,7 @@
         {
             var hrId = this.hrSpecialists.IdByUser(this.User.Id());
 
-            if (hrId == 0)
+            if (hrId == 0 && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(HRSpecialistsController.Become), "HRSpecialists");
             }
@@ -126,7 +126,7 @@
                 return View(employee);
             }
 
-            if (!this.employees.IsByHR(id, hrId))
+            if (!this.employees.IsByHR(id, hrId) && !User.IsAdmin())
             {
                 return BadRequest();
             }
@@ -143,7 +143,7 @@
                 employee.SalaryAmount,
                 employee.SalaryStatus);
 
-            return RedirectToAction(nameof(Mine));
+            return RedirectToAction(nameof(All));
         }
 
         public IActionResult All([FromQuery] AllEmployeesQueryModel query)

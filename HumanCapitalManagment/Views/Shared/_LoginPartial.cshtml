@@ -9,14 +9,15 @@
     {
         var userId = User.Id();
         var userIsHRSpecialist = HRSpecialists.IsHRSpecialist(userId);
+        var userIsAdmin = User.IsAdmin();
 
-        @if (userIsHRSpecialist)
+        @if (userIsHRSpecialist && !userIsAdmin)
         {
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Employees" asp-action="Mine">My Records</a>
             </li>
         }
-        else
+        else if (!userIsAdmin)
         {
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="HRSpecialists" asp-action="Become">Join HR Team</a>
