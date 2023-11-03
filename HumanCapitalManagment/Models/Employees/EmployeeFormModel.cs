@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using static Data.DataConstants.Employee;
-    using HumanCapitalManagment.Services.Employees;
+    using HumanCapitalManagment.Services.Employees.Models;
 
     public class EmployeeFormModel
     {

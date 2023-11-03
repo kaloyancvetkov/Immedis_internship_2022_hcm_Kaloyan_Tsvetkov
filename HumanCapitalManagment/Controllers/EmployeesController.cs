@@ -1,5 +1,6 @@
 ﻿namespace HumanCapitalManagment.Controllers
 {
+    using AutoMapper;
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Infrastructure;
     using HumanCapitalManagment.Models.Employees;
@@ -12,11 +13,13 @@
     {
         private readonly IHRService hrSpecialists;
         private readonly IEmployeeService employees;
+        private readonly IMapper mapper;
 
-        public EmployeesController(IEmployeeService employees, IHRService hrSpecialists)
+        public EmployeesController(IEmployeeService employees, IHRService hrSpecialists, IMapper mapper)
         {
             this.employees = employees;
             this.hrSpecialists = hrSpecialists;
+            this.mapper = mapper;
         }
 
         [Authorize]
@@ -88,19 +91,11 @@
                 return Unauthorized();
             }
 
-            return View(new EmployeeFormModel
-            {
-                Name = employee.Name,
-                EmailAddress = employee.EmailAddress,
-                PhoneNumber = employee.PhoneNumber,
-                Nationality = employee.Nationality,
-                DateOfBirth = employee.DateOfBirth,
-                Gender = employee.Gender,
-                DepartmentId = employee.DepartmentId,
-                SalaryAmount = employee.SalaryAmount,
-                SalaryStatus = employee.SalaryStatus,
-                Departments = this.employees.AllDepartments()
-            });
+            var employeeForm = this.mapper.Map<EmployeeFormModel>(employee);
+
+            employeeForm.Departments = this.employees.AllDepartments();
+
+            return View(employeeForm);
         }
 
         [Authorize]

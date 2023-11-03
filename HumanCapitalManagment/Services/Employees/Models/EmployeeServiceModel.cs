@@ -1,4 +1,4 @@
-﻿namespace HumanCapitalManagment.Services.Employees
+﻿namespace HumanCapitalManagment.Services.Employees.Models
 {
     using System;
 

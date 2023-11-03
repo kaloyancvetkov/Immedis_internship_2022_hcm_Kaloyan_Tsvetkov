@@ -1,5 +1,6 @@
 ﻿namespace HumanCapitalManagment.Controllers
 {
+    using AutoMapper;
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Models;
     using HumanCapitalManagment.Models.Home;
@@ -13,7 +14,9 @@
         private readonly HCMDbContext data;
         private readonly IStatisticsService statistics;
 
-        public HomeController(IStatisticsService statistics, HCMDbContext data) 
+        public HomeController(
+            IStatisticsService statistics, 
+            HCMDbContext data)
         {
             this.statistics = statistics;
             this.data = data;
@@ -21,9 +24,6 @@
 
         public IActionResult Index()
         {
-            var totalEmployees = this.data.Employees.Count();
-            var totalUsers = this.data.Users.Count();
-
             var totalStatistics = this.statistics.Total();
 
             return View(new IndexViewModel

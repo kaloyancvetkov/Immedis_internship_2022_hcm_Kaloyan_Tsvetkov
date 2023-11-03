@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using HumanCapitalManagment.Models;
-    using HumanCapitalManagment.Services.Employees;
+    using HumanCapitalManagment.Services.Employees.Models;
 
     public class AllEmployeesQueryModel
     {

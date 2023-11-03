@@ -6,13 +6,20 @@
     using System.Collections.Generic;
     using System.Linq;
     using Data.Models;
+    using HumanCapitalManagment.Services.Employees.Models;
+    using AutoMapper.QueryableExtensions;
+    using AutoMapper;
 
     public class EmployeeService : IEmployeeService
     {
         private readonly HCMDbContext data;
+        private readonly IConfigurationProvider mapper;
 
-        public EmployeeService(HCMDbContext data)
-            => this.data = data;
+        public EmployeeService(HCMDbContext data, IMapper mapper)
+        {
+            this.data = data;
+            this.mapper = mapper.ConfigurationProvider;
+        }
 
         public EmployeeQueryServiceModel All(
             string department,
@@ -70,22 +77,7 @@
             => this.data
                 .Employees
                 .Where(e => e.Id == id)
-                .Select(e => new EmployeeDetailsServiceModel
-                {
-                    Id = e.Id,
-                    Name = e.Name,
-                    EmailAddress = e.EmailAddress,
-                    PhoneNumber = e.PhoneNumber,
-                    Nationality = e.Nationality,
-                    DateOfBirth = e.DateOfBirth,
-                    Gender = e.Gender,
-                    DepartmentName = e.Department.Name,
-                    SalaryAmount = e.SalaryAmount,
-                    SalaryStatus = e.SalaryStatus,
-                    HRSpecialistId = e.HRSpecialistId,
-                    HRSpecialistName = e.HRSpecialist.Name,
-                    UserId = e.HRSpecialist.UserId
-                })
+                .ProjectTo<EmployeeDetailsServiceModel>(this.mapper)
                 .FirstOrDefault();
 
         public int Create(

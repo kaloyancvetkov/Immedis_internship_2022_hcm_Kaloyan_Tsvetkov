@@ -1,6 +1,7 @@
 ﻿namespace HumanCapitalManagment.Services.Employees
 {
     using HumanCapitalManagment.Models;
+    using HumanCapitalManagment.Services.Employees.Models;
     using System;
     using System.Collections.Generic;
 

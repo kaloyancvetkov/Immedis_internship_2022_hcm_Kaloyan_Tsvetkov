@@ -9,6 +9,7 @@ namespace HumanCapitalManagment
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -42,7 +43,13 @@ namespace HumanCapitalManagment
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<HCMDbContext>();
-            services.AddControllersWithViews();
+
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
 
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
@@ -72,6 +79,7 @@ namespace HumanCapitalManagment
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
+                    endpoints.MapDefaultAreaRoute();
                     endpoints.MapDefaultControllerRoute();
                     endpoints.MapRazorPages();
                 });

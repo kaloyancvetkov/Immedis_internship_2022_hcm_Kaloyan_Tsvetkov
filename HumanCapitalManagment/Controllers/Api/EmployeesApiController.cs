@@ -2,6 +2,7 @@
 {
     using HumanCapitalManagment.Models.Api.Employees;
     using HumanCapitalManagment.Services.Employees;
+    using HumanCapitalManagment.Services.Employees.Models;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
