@@ -1,4 +1,4 @@
-﻿namespace HumanCapitalManagment.Infrastructure
+﻿namespace HumanCapitalManagment.Infrastructure.Extensions
 {
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Data.Models;

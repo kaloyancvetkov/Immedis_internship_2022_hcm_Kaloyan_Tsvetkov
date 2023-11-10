@@ -1,13 +1,14 @@
 ﻿namespace HumanCapitalManagment.Controllers
 {
     using AutoMapper;
-    using HumanCapitalManagment.Data;
-    using HumanCapitalManagment.Infrastructure;
+    using HumanCapitalManagment.Infrastructure.Extensions;
     using HumanCapitalManagment.Models.Employees;
     using HumanCapitalManagment.Services.Employees;
     using HumanCapitalManagment.Services.HRs;
+    using Humanizer;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using static WebConstants;
 
     public class EmployeesController : Controller
     {
@@ -71,6 +72,8 @@
                 employee.SalaryAmount,
                 employee.SalaryStatus);
 
+            TempData[GlobalMessageKey] = "Your employee record was added and is awaiting for approval!";
+
             return RedirectToAction(nameof(All));
         }
 
@@ -100,7 +103,7 @@
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit (int id, EmployeeFormModel employee)
+        public IActionResult Edit(int id, EmployeeFormModel employee)
         {
             var hrId = this.hrSpecialists.IdByUser(this.User.Id());
 
@@ -136,9 +139,18 @@
                 employee.Gender,
                 employee.DepartmentId,
                 employee.SalaryAmount,
-                employee.SalaryStatus);
+                employee.SalaryStatus,
+                this.User.IsAdmin());
 
-            return RedirectToAction(nameof(All));
+            TempData[GlobalMessageKey] = $"Your employee record was edited{(this.User.IsAdmin() ? string.Empty : " and is awaiting for approval")}!";
+
+            if (User.IsAdmin())
+            {
+                return RedirectToAction(nameof(All));
+                
+            }
+
+            return RedirectToAction(nameof(Mine));
         }
 
         public IActionResult All([FromQuery] AllEmployeesQueryModel query)

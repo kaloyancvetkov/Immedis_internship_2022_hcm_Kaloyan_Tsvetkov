@@ -1,0 +1,56 @@
+﻿@model IEnumerable<EmployeeServiceModel>
+
+@{
+    ViewBag.Title = "Admin";
+}
+
+<h1 class="mt-4 mb-3">All Employees</h1>
+
+<div class="row justify-content-center">
+    <table class="table text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email Address</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Nationality</th>
+                <th scope="col">Date of birth</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Department</th>
+                <th scope="col">Salary Amount</th>
+                <th scope="col">Salary Status</th>
+                <th scope="col">Approved</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <th scope="row">@employee.Id</th>
+                    <td>@employee.Name</td>
+                    <td>@employee.EmailAddress</td>
+                    <td>@employee.PhoneNumber</td>
+                    <td>@employee.Nationality</td>
+                    <td>@employee.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                    <td>@employee.Gender</td>
+                    <td>@employee.DepartmentName</td>
+                    <td>@employee.SalaryAmount</td>
+                    <td>@(employee.SalaryStatus == null ? "N/A" : employee.SalaryStatus)</td>
+
+                    <td>@(employee.IsPublic ? "Yes" : "No")</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Employees" asp-action="ChangeVisibility" asp-route-id="@employee.Id" class="btn btn-info">@(employee.IsPublic ? "Hide" : "Make public")</a>
+                    </td>
+                    <td><a asp-area="" asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-warning">Edit</a></td>
+                    <td>
+                        <a asp-area="" asp-controller="Employees" asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

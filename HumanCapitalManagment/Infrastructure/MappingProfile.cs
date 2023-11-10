@@ -12,6 +12,9 @@
             this.CreateMap<EmployeeDetailsServiceModel, EmployeeFormModel>();
             this.CreateMap<Employee, EmployeeDetailsServiceModel>()
                 .ForMember(e => e.UserId, cfg => cfg.MapFrom(e => e.HRSpecialist.UserId));
+            this.CreateMap<Department, EmployeeDepartmentServiceModel>();
+            this.CreateMap<Employee, EmployeeServiceModel>()
+                .ForMember(e => e.DepartmentName, cfg => cfg.MapFrom(e => e.Department.Name));
         }
     }
 }

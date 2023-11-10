@@ -2,7 +2,7 @@
 {
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Data.Models;
-    using HumanCapitalManagment.Infrastructure;
+    using HumanCapitalManagment.Infrastructure.Extensions;
     using HumanCapitalManagment.Models.HRSpecialists;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

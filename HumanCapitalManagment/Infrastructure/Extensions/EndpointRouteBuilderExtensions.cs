@@ -1,4 +1,4 @@
-﻿namespace HumanCapitalManagment.Infrastructure
+﻿namespace HumanCapitalManagment.Infrastructure.Extensions
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Routing;

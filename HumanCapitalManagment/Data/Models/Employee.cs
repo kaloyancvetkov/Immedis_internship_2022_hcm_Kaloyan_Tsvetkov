@@ -31,6 +31,8 @@
         [Required(ErrorMessage = "You must check one of the two options")]
         public string Gender { get; set; }
 
+        public bool IsPublic { get; set; }
+
         public int DepartmentId { get; set; }
         public Department Department { get; init; }
 

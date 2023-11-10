@@ -8,11 +8,12 @@
     public interface IEmployeeService
     {
         EmployeeQueryServiceModel All(
-            string department,
-            string searchTerm,
-            EmployeesSorting sorting,
-            int currentPage,
-        int employeesPerPage);
+            string department = null,
+            string searchTerm = null,
+            EmployeesSorting sorting = EmployeesSorting.DateAdded,
+            int currentPage = 1,
+            int employeesPerPage = int.MaxValue,
+            bool publicOnly = true);
 
         EmployeeDetailsServiceModel Details(int employeeId);
 
@@ -36,9 +37,12 @@
                 string Gender,
                 int DepartmentId,
                 decimal SalaryAmount,
-                string SalaryStatus);
+                string SalaryStatus,
+                bool isPublic);
 
         bool IsByHR(int employeeId, int hrId);
+
+        void ChangeVisibility(int employeeId);
 
         IEnumerable<EmployeeServiceModel> ByUser(string userId);
 

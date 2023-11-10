@@ -1,14 +1,14 @@
 ﻿namespace HumanCapitalManagment.Services.Employees
 {
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
+    using Data.Models;
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Models;
+    using HumanCapitalManagment.Services.Employees.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Data.Models;
-    using HumanCapitalManagment.Services.Employees.Models;
-    using AutoMapper.QueryableExtensions;
-    using AutoMapper;
 
     public class EmployeeService : IEmployeeService
     {
@@ -22,13 +22,14 @@
         }
 
         public EmployeeQueryServiceModel All(
-            string department,
-            string searchTerm,
-            EmployeesSorting sorting,
-            int currentPage,
-            int employeesPerPage)
+            string department = null,
+            string searchTerm = null,
+            EmployeesSorting sorting = EmployeesSorting.DateAdded,
+            int currentPage = 1,
+            int employeesPerPage = int.MaxValue,
+            bool publicOnly = true)
         {
-            var employeesQuery = this.data.Employees.AsQueryable();
+            var employeesQuery = this.data.Employees.Where(e => !publicOnly || e.IsPublic);
 
             if (!string.IsNullOrWhiteSpace(department))
             {
@@ -103,7 +104,8 @@
                 DepartmentId = departmentId,
                 HRSpecialistId = hrId,
                 SalaryAmount = salaryAmount,
-                SalaryStatus = salaryStatus
+                SalaryStatus = salaryStatus,
+                IsPublic = false
             };
 
             this.data.Employees.Add(employeeData);
@@ -122,7 +124,8 @@
                 string gender,
                 int departmentId,
                 decimal salaryAmount,
-                string salaryStatus)
+                string salaryStatus,
+                bool isPublic)
         {
             var employeeData = this.data.Employees.Find(id);
 
@@ -140,6 +143,7 @@
             employeeData.DepartmentId = departmentId;
             employeeData.SalaryAmount = salaryAmount;
             employeeData.SalaryStatus = salaryStatus;
+            employeeData.IsPublic = isPublic;
 
             this.data.SaveChanges();
 
@@ -149,6 +153,15 @@
             => this.data
                 .Employees
                 .Any(e => e.Id == employeeId && e.HRSpecialistId == hrId);
+
+        public void ChangeVisibility(int employeeId)
+        {
+            var employee = this.data.Employees.Find(employeeId);
+
+            employee.IsPublic = !employee.IsPublic;
+
+            this.data.SaveChanges();
+        }
 
         public IEnumerable<EmployeeServiceModel> ByUser(string userId)
             => this.GetEmployees(this.data
@@ -166,29 +179,13 @@
 
         private IEnumerable<EmployeeServiceModel> GetEmployees(IQueryable<Employee> employeesQuery)
             => employeesQuery
-                .Select(e => new EmployeeServiceModel
-                {
-                    Id = e.Id,
-                    Name = e.Name,
-                    EmailAddress = e.EmailAddress,
-                    PhoneNumber = e.PhoneNumber,
-                    Nationality = e.Nationality,
-                    DateOfBirth = e.DateOfBirth,
-                    Gender = e.Gender,
-                    DepartmentName = e.Department.Name,
-                    SalaryAmount = e.SalaryAmount,
-                    SalaryStatus = e.SalaryStatus,
-                })
-            .ToList();
+                .ProjectTo<EmployeeServiceModel>(this.mapper)
+                .ToList();
 
         public IEnumerable<EmployeeDepartmentServiceModel> AllDepartments()
             => this.data
                 .Departments
-                .Select(d => new EmployeeDepartmentServiceModel
-                {
-                    Id = d.Id,
-                    Name = d.Name,
-                })
+                .ProjectTo<EmployeeDepartmentServiceModel>(this.mapper)
                 .ToList();
 
         public bool DepartmentExists(int departmentId)

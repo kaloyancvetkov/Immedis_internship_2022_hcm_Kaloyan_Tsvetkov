@@ -24,9 +24,9 @@
                 </div>
             </div>
             <div class="card" style="height: 25rem; width: 26rem;">
-                <img class="card-img-top" style="height: 205px;object-fit: cover" src="https://www.ismartrecruit.com/upload/blog/main_image/For_Sourcing_of_Candidates_Recruiter_Use_These_7_Ways.webp">
+                <img class="card-img-top" style="height: 205px;object-fit: cover" src="https://www.aihr.com/wp-content/uploads/human-resources-specialist-cover.png">
                 <div class="card-body">
-                    <h3 class="card-title mb-3">Candidates</h3>
+                    <h3 class="card-title mb-3">HR Specialists</h3>
                     <a class="btn btn-primary text-center" asp-area="" asp-controller="Employees" asp-action="All">View all</a>
                 </div>
             </div>
@@ -35,7 +35,7 @@
 
     <div class="row text-center">
         <div class="col-12 text-center mb-3">
-            <button class="btn btn-primary" id="statistics-button">Show Statistics</button>
+            <button class="btn btn-primary" id="statistics-button" onclick="myFunction()">Show Statistics</button>
         </div>
     </div>
 
@@ -52,9 +52,9 @@
     <script>
         $('#statistics-button').on('click', ev => {
             $.get('/api/statistics', (data) => {
-                $('#total-employees').text(data.totalEmployees + " Employees");
-                $('#total-users').text(data.totalUsers + " Users");
-                $('#total-candidates').text(data.totalHRSpecialists + " Candidates");
+                $('#total-employees').text(data.totalEmployees + " Employee(s)");
+                $('#total-users').text(data.totalUsers + " User(s)");
+                $('#total-hrSpecialists').text(data.totalHRSpecialists + " HR Specialist(s)");
 
                 $('#statistics').removeClass('d-none');
                 $('#statistics-button').hide();

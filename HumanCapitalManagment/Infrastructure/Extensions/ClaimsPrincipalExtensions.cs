@@ -1,4 +1,4 @@
-﻿namespace HumanCapitalManagment.Infrastructure
+﻿namespace HumanCapitalManagment.Infrastructure.Extensions
 {
     using System.Security.Claims;
     using static Areas.Admin.AdminConstants;

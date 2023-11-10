@@ -4,24 +4,26 @@
 
     public class EmployeeServiceModel
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
 
-        public string Name { get; set; }
+        public string Name { get; init; }
 
-        public string EmailAddress { get; set; }
+        public string EmailAddress { get; init; }
 
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; init; }
 
-        public string Nationality { get; set; }
+        public string Nationality { get; init; }
 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; init; }
 
-        public string Gender { get; set; }
+        public string Gender { get; init; }
 
-        public string DepartmentName { get; set; }
+        public string DepartmentName { get; init; }
 
-        public decimal SalaryAmount { get; set; }
+        public decimal SalaryAmount { get; init; }
 
-        public string SalaryStatus { get; set; }
+        public string SalaryStatus { get; init; }
+
+        public bool IsPublic { get; init; }
     }
 }

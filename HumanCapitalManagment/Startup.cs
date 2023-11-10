@@ -2,7 +2,7 @@ namespace HumanCapitalManagment
 {
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Data.Models;
-    using HumanCapitalManagment.Infrastructure;
+    using HumanCapitalManagment.Infrastructure.Extensions;
     using HumanCapitalManagment.Services.Employees;
     using HumanCapitalManagment.Services.HRs;
     using HumanCapitalManagment.Services.Statistics;
