@@ -1,5 +1,7 @@
 ﻿namespace HumanCapitalManagment.Controllers
 {
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using HumanCapitalManagment.Data;
     using HumanCapitalManagment.Data.Models;
     using HumanCapitalManagment.Infrastructure.Extensions;
@@ -11,9 +13,13 @@
     public class HRSpecialistsController : Controller
     {
         private readonly HCMDbContext data;
+        private readonly IConfigurationProvider mapper;
 
-        public HRSpecialistsController(HCMDbContext data) 
-            => this.data = data;
+        public HRSpecialistsController(HCMDbContext data, IConfigurationProvider mapper)
+        {
+            this.data = data;
+            this.mapper = mapper;
+        }
 
         [Authorize]
         public IActionResult Become() => View();
@@ -41,14 +47,26 @@
             var hrSpecialistData = new HRSpecialist
             {
                 Name = hrSpecialist.Name,
+                EmailAddress = hrSpecialist.EmailAddress,
                 PhoneNumber = hrSpecialist.PhoneNumber,
+                ImageUrl = hrSpecialist.ImageUrl,
                 UserId = userId,
             };
 
             this.data.HRSpecialists.Add(hrSpecialistData);
             this.data.SaveChanges();
 
-            return RedirectToAction("All", "Employees");
+            return RedirectToAction("All", "HRSpecialists");
+        }
+
+        public IActionResult All()
+        {
+            var hrSpecialists = this.data
+                .HRSpecialists
+                .ProjectTo<HRSpecialistViewModel>(this.mapper)
+                .ToList();
+
+            return View(hrSpecialists);
         }
     }
 }

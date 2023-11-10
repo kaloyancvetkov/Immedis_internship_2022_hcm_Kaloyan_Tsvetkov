@@ -10,8 +10,17 @@
         public string Name { get; set; }
 
         [Required]
+        [EmailAddress]
+        [Display(Name = "Email Address")]
+        public string EmailAddress { get; set; }
+
+        [Required]
         [StringLength(PhoneNumberMaxLength, MinimumLength = PhoneNumberMinLength)]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Image URL")]
+        public string ImageUrl { get; set; }
     }
 }

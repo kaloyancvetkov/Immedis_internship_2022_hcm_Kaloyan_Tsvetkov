@@ -129,7 +129,7 @@
                 return BadRequest();
             }
 
-            this.employees.Edit(
+            var edited = this.employees.Edit(
                 id,
                 employee.Name,
                 employee.EmailAddress,
@@ -141,6 +141,11 @@
                 employee.SalaryAmount,
                 employee.SalaryStatus,
                 this.User.IsAdmin());
+
+            if (!edited)
+            {
+                return BadRequest();
+            }
 
             TempData[GlobalMessageKey] = $"Your employee record was edited{(this.User.IsAdmin() ? string.Empty : " and is awaiting for approval")}!";
 

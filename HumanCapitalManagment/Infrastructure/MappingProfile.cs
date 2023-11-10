@@ -3,6 +3,7 @@
     using AutoMapper;
     using HumanCapitalManagment.Data.Models;
     using HumanCapitalManagment.Models.Employees;
+    using HumanCapitalManagment.Models.HRSpecialists;
     using HumanCapitalManagment.Services.Employees.Models;
 
     public class MappingProfile : Profile
@@ -15,6 +16,7 @@
             this.CreateMap<Department, EmployeeDepartmentServiceModel>();
             this.CreateMap<Employee, EmployeeServiceModel>()
                 .ForMember(e => e.DepartmentName, cfg => cfg.MapFrom(e => e.Department.Name));
+            this.CreateMap<HRSpecialist, HRSpecialistViewModel>();
         }
     }
 }

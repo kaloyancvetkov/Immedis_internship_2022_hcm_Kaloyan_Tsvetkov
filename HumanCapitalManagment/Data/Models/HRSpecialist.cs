@@ -12,8 +12,15 @@
         public string Name { get; set; }
 
         [Required]
+        [EmailAddress]
+        public string EmailAddress { get; set; }
+
+        [Required]
         [MaxLength(PhoneNumberMaxLength)]
         public string PhoneNumber { get; set; }
+
+        [Required]
+        public string ImageUrl { get; set; }
 
         [Required]
         public string UserId { get; init; }
