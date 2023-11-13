@@ -183,5 +183,31 @@
 
             return View(myEmployees);
         }
+
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var hrId = this.hrSpecialists.IdByUser(this.User.Id());
+
+            if (hrId == 0 && !User.IsAdmin())
+            {
+                return RedirectToAction(nameof(HRSpecialistsController.Become), "HRSpecialists");
+            }
+
+            if (!this.employees.IsByHR(id, hrId) && !User.IsAdmin())
+            {
+                return BadRequest();
+            }
+
+            var isDeleted = this.employees.Delete(id);
+
+            if (isDeleted)
+            {
+                TempData[GlobalMessageKey] = "Your employee was successfully removed!";
+                return RedirectToAction(nameof(All));
+            }
+
+            return BadRequest();
+        }
     }
 }

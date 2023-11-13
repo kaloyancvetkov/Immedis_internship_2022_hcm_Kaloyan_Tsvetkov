@@ -149,6 +149,24 @@
 
             return true;
         }
+
+        public bool Delete(int id)
+        {
+            var employee = this.data
+                .Employees
+                .FirstOrDefault(s => s.Id == id);
+
+            if (employee != null)
+            {
+                this.data.Remove(employee);
+                this.data.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+
         public bool IsByHR(int employeeId, int hrId)
             => this.data
                 .Employees

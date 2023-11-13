@@ -40,6 +40,8 @@
                 string SalaryStatus,
                 bool isPublic);
 
+        bool Delete(int employeeId);
+
         bool IsByHR(int employeeId, int hrId);
 
         void ChangeVisibility(int employeeId);

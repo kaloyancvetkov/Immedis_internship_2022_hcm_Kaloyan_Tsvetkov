@@ -1,24 +1,27 @@
 ﻿@model IEnumerable<HRSpecialistViewModel>
 
-<h1 id="index-heading" class="mt-4 mb-5 text-center">HR Team</h1>
-<div class="row">
-
-    @foreach (var hrSpecialist in Model)
-    {
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="@hrSpecialist.ImageUrl" alt="img">
-            <div class="card-body">
-                <h5 class="card-title text-center">@hrSpecialist.Name</h5>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Email: @hrSpecialist.EmailAddress</li>
-                <li class="list-group-item">Phone: @hrSpecialist.PhoneNumber</li>
-            </ul>
-            <div class="card-body">
-                <a href="#" class="card-link float-left ml-2">Call</a>
-                <a href="https://mail.google.com/mail/u/0/" class="card-link float-right mr-2">Send Email</a>
-            </div>
+<div class="container text-center">
+    <h1 id="index-heading" class="mt-4 mb-5 text-center">HR Team</h1>
+    <h3 id="index-h3">Welcome to the Company's HR Team! Here you can see our HR consultants and contact them if you need some information.</h3>
+    <div class="container-fluid mt-4 text-center">
+        <div class="row justify-content-center" style="display: inline-flex" id="row-cards">
+            @foreach (var hrSpecialist in Model)
+            {
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="@hrSpecialist.ImageUrl" alt="img">
+                    <div class="card-body align-content-center">
+                        <h5 class="card-title text-center">@hrSpecialist.Name</h5>
+                    </div>
+                    <ul class="list-group list-group-flush text-center">
+                        <li class="list-group-item">Email: @hrSpecialist.EmailAddress</li>
+                        <li class="list-group-item">Phone: @hrSpecialist.PhoneNumber</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a href="#" class="card-link btn btn-success float-left ml-2">Call</a>
+                        <a href="https://mail.google.com/mail/u/0/" class="card-link btn btn-info float-right mr-2">Send Email</a>
+                    </div>
+                </div>
+            }
         </div>
-
-    }
+    </div>
 </div>

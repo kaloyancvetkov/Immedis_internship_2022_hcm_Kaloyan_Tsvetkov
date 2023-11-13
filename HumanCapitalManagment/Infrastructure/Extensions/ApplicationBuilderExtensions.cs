@@ -43,18 +43,18 @@
 
             data.Departments.AddRange(new[]
             {
-                new Department { Name = "Finance" },
-                new Department { Name = "Sales" },
-                new Department { Name = "Marketing" },
-                new Department { Name = "Logistics" },
                 new Department { Name = "Accounting" },
-                new Department { Name = "Security" },
-                new Department { Name = "Management" },
-                new Department { Name = "Technology" },
                 new Department { Name = "Customer Service" },
-                new Department { Name = "Production" },
                 new Department { Name = "Engineering" },
+                new Department { Name = "Finance" },
+                new Department { Name = "Logistics" },
+                new Department { Name = "Management" },
+                new Department { Name = "Marketing" },
+                new Department { Name = "Production" },
                 new Department { Name = "Quality Assurance" },
+                new Department { Name = "Sales" },
+                new Department { Name = "Security" },
+                new Department { Name = "Technology" },
             });
 
             data.SaveChanges();

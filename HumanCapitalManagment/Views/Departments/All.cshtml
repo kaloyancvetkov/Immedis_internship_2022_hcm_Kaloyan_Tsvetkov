@@ -1,0 +1,129 @@
+﻿@model IEnumerable<EmployeeDepartmentServiceModel>
+
+@{
+    ViewBag.Title = "Departments";
+}
+
+<div class="container text-center">
+    <h1 id="index-heading">@ViewBag.Title</h1>
+    <h3 id="index-h3">Welcome to the Company's Departments! Here you can get some information about the departments themselves.</h3>
+    <div class="container-fluid mt-4 text-center">
+        <div class="row justify-content-center" style="display: inline-flex" id="row-cards">
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="https://storage.googleapis.com/joblist-content/hero-images/Accounting.png">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Accounting</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">The accounting team ensures employees get paid on time and vendor invoices get paid as agreed. The accounting department also prepares financial statements for stakeholders in your company and needs to oversee all monetary transactions.</p>
+                </div>
+            </div>
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="https://blog.commbox.io/hs-fs/hubfs/Imported_Blog_Media/12-1024x600.jpg?width=1024&height=600&name=12-1024x600.jpg">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Customer Service</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">Customer service teams focus on providing the best possible CX before and after a customer purchases a product. They also specialize in customer retention and solve complex issues that frustrate customers. The customer service team is the face of the organization and the frontline when customers require assistance.</p>
+                </div>
+            </div>
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="https://cdn.mos.cms.futurecdn.net/HFUAjfbamNhbM8dsNSQW3D.jpg">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Engineering</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">Engineering departments are in charge of developing innovative devices to bring out advanced materials into the world and designing, introducing, preserving and improving plants for stable and efficient production.</p>
+                </div>
+            </div>
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="https://d6xcmfyh68wv8.cloudfront.net/learn-content/uploads/2022/08/Shutterstock_1040049118.png">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Finance</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">This department controls the income and expenditure in addition to ensuring effective business running with minimum disruptions. Besides the traditional roles of handling the payroll, income and expenses, finance department responsibilities also include economic analysis to improve key business strategies.</p>
+                </div>
+            </div>
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="https://www.hockcheong.com.my/wp-content/uploads/2021/04/Logistic-services.jpg">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Logistics</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">The logistics department is responsible for planning, coordinating, and managing the movement of goods and materials from one location to another. This includes tasks such as transportation, warehousing, and distribution of goods.</p>
+                </div>
+            </div>
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="https://getnave.com/blog/wp-content/uploads/2018/01/what-is-project-management-process.png">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Management</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">Management is how businesses organize and direct workflow, operations, and employees to meet company goals. The primary goal of management is to create an environment that lets employees work efficiently and productively.</p>
+                </div>
+            </div>
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="https://builtin.com/sites/www.builtin.com/files/styles/og/public/2022-09/marketing.png">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Marketing</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">It serves as the face of your company, coordinating and producing all materials representing the business. It is the Marketing Department's job to reach out to prospects, customers, investors and/or the community, while creating an overarching image that represents your company in a positive light.</p>
+                </div>
+            </div>
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="https://d1m75rqqgidzqn.cloudfront.net/wp-data/2021/12/27151547/iStock-1189916627.jpg">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Production</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">A production department is a functional area within a business that is responsible for manufacturing the company's products. It is the section of a company where the transformation of raw materials into finished goods happens.</p>
+                </div>
+            </div>
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="https://cdn.elearningindustry.com/wp-content/uploads/2023/07/Shutterstock_2239497801.jpg">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Quality Assurance</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">Quality assurance is the systematic way to determine whether the products or services of a company meet quality standards and satisfy customer expectations. QA is designed to make customers happy and build trust between them and the company's products or services.</p>
+                </div>
+            </div>
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="https://assets-global.website-files.com/6318e6b2f58b77044875e67b/632b2eb47b58103aeac94c5f_62263643fcd1b61f8b78ab7b_sales-volume.png">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Sales</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">A sales department is responsible for selling products or services for a company. The department comprises a sales team that works together to make sales, increase profitability and build and maintain relationships with customers to encourage repeat purchases and brand loyalty.</p>
+                </div>
+            </div>
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="http://1105633972.n91031.test.prositehosting.co.uk/wp-content/uploads/2020/04/Disaster-Recovery-Illustration-1.png">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Security</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">Security is primarily a protective service of prevention, most conspicuously engaged in general protective activities such as access control, cargo protection, building security, investigation of criminal activities, inspections, and enforcement of company rules.</p>
+                </div>
+            </div>
+            <div class="card" style="width: 26rem;">
+                <img class="card-img-top" style="height: 205px; object-fit: cover" src="https://blog.vantagecircle.com/content/images/2020/08/technology-in-the-workplace.png">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Technology</h3>
+                    <button class="btn btn-info">Show information</button>
+                    <p class="mt-3" style="display: none">IT departments are responsible for maintaining the hardware and software systems within an organization. This includes configuring and updating software applications, employee devices, servers, databases, and other IT infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const p = event.target.parentNode.children[2];
+                if (p.style.display == 'none') {
+                    button.innerHTML = "Hide information";
+                    p.style.display = 'block';
+                }
+                else {
+                    button.innerHTML = "Show information";
+                    p.style.display = 'none';
+                }
+            })
+        })
+    </script>
+}
