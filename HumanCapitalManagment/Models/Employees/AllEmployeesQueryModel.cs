@@ -13,7 +13,7 @@
 
         public IEnumerable<string> Departments { get; set; }
 
-        [Display(Name = "Search by text")]
+        [Display(Name = "Search by key word")]
         public string SearchTerm { get; init; }
 
         public EmployeesSorting Sorting { get; init; }
